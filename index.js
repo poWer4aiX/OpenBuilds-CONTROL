@@ -243,7 +243,7 @@ function checkPowerSettings() {
     const {
       exec
     } = require('child_process');
-
+ 
     const cfg = exec('powercfg /GETACTIVESCHEME', function(error, stdout, stderr) {
       if (error) {
         debug_log(error.stack);
@@ -2644,6 +2644,20 @@ function isElectron() {
 }
 
 if (isElectron()) {
+  function showJogWindow() {
+    if (jogWindow === null) {
+      createJogWindow();
+      jogWindow.show()
+      jogWindow.setAlwaysOnTop(true);
+      jogWindow.focus();
+      jogWindow.setAlwaysOnTop(false);
+    } else {
+      jogWindow.show()
+      jogWindow.setAlwaysOnTop(true);
+      jogWindow.focus();
+      jogWindow.setAlwaysOnTop(false);
+    }
+  }
   const gotTheLock = electronApp.requestSingleInstanceLock()
   var lauchGUI = true;
   if (!gotTheLock) {
@@ -2678,18 +2692,7 @@ if (isElectron()) {
       }
 
       if (lauchGUI) {
-        if (jogWindow === null) {
-          createJogWindow();
-          jogWindow.show()
-          jogWindow.setAlwaysOnTop(true);
-          jogWindow.focus();
-          jogWindow.setAlwaysOnTop(false);
-        } else {
-          jogWindow.show()
-          jogWindow.setAlwaysOnTop(true);
-          jogWindow.focus();
-          jogWindow.setAlwaysOnTop(false);
-        }
+        showJogWindow()
       }
 
 
@@ -2719,18 +2722,10 @@ if (isElectron()) {
       }
 
       if (process.platform == 'darwin' || uploadedgcode.length > 1) {
-        if (jogWindow === null) {
-          createJogWindow();
-          jogWindow.show()
-          jogWindow.setAlwaysOnTop(true);
-          jogWindow.focus();
-          jogWindow.setAlwaysOnTop(false);
-        } else {
-          jogWindow.show()
-          jogWindow.setAlwaysOnTop(true);
-          jogWindow.focus();
-          jogWindow.setAlwaysOnTop(false);
-        }
+        showJogWindow()
+      }
+      if(process.platform == 'linux') {
+        showJogWindow()
       }
 
     }
@@ -2812,18 +2807,7 @@ if (isElectron()) {
           label: 'Open User Interface (GUI)',
           click() {
             // debug_log("Clicked Systray")
-            if (jogWindow === null) {
-              createJogWindow();
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            } else {
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            }
+            showJogWindow()
           }
         }, {
           label: 'Quit OpenBuilds CONTROL (Disables all integration until started again)',
@@ -2837,36 +2821,14 @@ if (isElectron()) {
         if (appIcon) {
           appIcon.on('click', function() {
             // debug_log("Clicked Systray")
-            if (jogWindow === null) {
-              createJogWindow();
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            } else {
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            }
+            showJogWindow()
           })
         }
 
         if (appIcon) {
           appIcon.on('balloon-click', function() {
             // debug_log("Clicked Systray")
-            if (jogWindow === null) {
-              createJogWindow();
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            } else {
-              jogWindow.show()
-              jogWindow.setAlwaysOnTop(true);
-              jogWindow.focus();
-              jogWindow.setAlwaysOnTop(false);
-            }
+            showJogWindow()
           })
         }
 
